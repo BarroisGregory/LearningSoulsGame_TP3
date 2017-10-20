@@ -76,7 +76,8 @@ public abstract class Character {
         String str1= format("%5d",life);
         String str2= format("%5d",stamina);
         String str3= format(Locale.US,"%6.2f",computeProtection());
-        return (format(Locale.US,"%-20s %-20s LIFE:%-10s STAMINA:%-10s PROTECTION:%-10s", "[ "+getClass().getSimpleName()+" ]", name, str1, str2, str3)+ ((this.isAlive())? "(ALIVE)" :"(DEAD)"));
+        String str4= format(Locale.US,"%6.2f",computeBuff());
+        return (format(Locale.US,"%-20s %-20s LIFE:%-10s STAMINA:%-10s PROTECTION:%-10s BUFF:%-10s", "[ "+getClass().getSimpleName()+" ]", name, str1, str2, str3, str4)+ ((this.isAlive())? "(ALIVE)" :"(DEAD)"));
     }
 
     //methodes
@@ -119,18 +120,21 @@ public abstract class Character {
     }
 
     public int getHitWith(int val){
-        int pvRetire = ((val > life)? life :val);
-        if(computeProtection()==100){
+        int pvRetire = val;
+        if(computeProtection()>=100){
             pvRetire = 0;
         }
         else {
             if(computeProtection()!=0){
-                pvRetire =Math.round(pvRetire * computeProtection()/100);
+                pvRetire =Math.round(val - (val * computeProtection()/100));
             }
         }
+        pvRetire = ((pvRetire > life)? life :pvRetire);
         life -= pvRetire;
         return (pvRetire);
     }
 
     protected abstract float computeProtection();
+
+    protected abstract float computeBuff();
 }

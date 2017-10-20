@@ -1,4 +1,7 @@
 package lsg;
+import lsg.armor.BlackWitchVeil;
+import lsg.armor.DragonSlayerLeggings;
+import lsg.armor.RingedKnightArmor;
 import lsg.characters.*;
 import lsg.characters.Character;
 import lsg.weapons.Claw;
@@ -54,7 +57,24 @@ public class LearningSoulsGame {
         fight1v1();
     }
 
+    private void play_v2(){
+        init();
+        hero.setArmorItem(new BlackWitchVeil(),1);
+        hero.setArmorItem(new DragonSlayerLeggings(),2);
+        hero.setArmorItem(new RingedKnightArmor(),3);
+        fight1v1();
+    }
+
+    private void play_v3(){
+        init();
+        monster = new Lycanthrope();
+        hero.setArmorItem(new BlackWitchVeil(),1);
+        hero.setArmorItem(new DragonSlayerLeggings(),2);
+        hero.setArmorItem(new RingedKnightArmor(),3);
+        fight1v1();
+    }
+
     public static void main(String[] args){
-        new LearningSoulsGame().play_v1();
+        new LearningSoulsGame().play_v3();
     }
 }

@@ -1,9 +1,12 @@
 package lsg.characters;
 
+import lsg.buffs.talismans.Talisman;
+
 public class Monster extends Character {
 
     private static int INSTANCES_COUNT=0;
     private float skinThickness;
+    private Talisman talisman;
 
     //constructeurs
     public Monster(){
@@ -18,6 +21,14 @@ public class Monster extends Character {
         skinThickness = 20f;
     }
 
+    public void setTalisman(Talisman talisman) {
+        this.talisman = talisman;
+    }
+
+    public Talisman getTalisman() {
+        return talisman;
+    }
+
     public float getSkinThickness() {
         return skinThickness;
     }
@@ -29,5 +40,10 @@ public class Monster extends Character {
     @Override
     protected float computeProtection() {
         return (skinThickness);
+    }
+
+    @Override
+    protected float computeBuff() {
+        return talisman.computeBuffValue();
     }
 }

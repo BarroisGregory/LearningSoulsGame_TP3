@@ -3,27 +3,32 @@ package lsg.characters;
 import lsg.armor.ArmorItem;
 import lsg.armor.BlackWitchVeil;
 import lsg.armor.RingedKnightArmor;
+import lsg.buffs.rings.Ring;
 
 import static java.lang.String.format;
 
 public class Hero extends Character {
-    private final int MAX_ARMOR_PIECES = 3;
+    private static int MAX_ARMOR_PIECES = 3;
+    private static int MAX_RINGS = 2;
     private ArmorItem armor[];
+    private Ring rings[];
 
     //constructeurs
     public Hero(){
         super(100,50,"Gregooninator");
-        armor = new ArmorItem[3];
+        armor = new ArmorItem[MAX_ARMOR_PIECES];
+        rings = new Ring[MAX_RINGS];
     }
 
     public Hero(String name){
         super(100,50,name);
-        armor = new ArmorItem[3];
+        armor = new ArmorItem[MAX_ARMOR_PIECES];
+        rings = new Ring[MAX_RINGS];
     }
 
     public void setArmorItem(ArmorItem armor, int slot) {
         slot --;
-        if(0<=slot && slot<=2) {
+        if(0<=slot && slot<MAX_ARMOR_PIECES) {
             this.armor[slot] = armor;
         }
     }
@@ -38,6 +43,23 @@ public class Hero extends Character {
         return(total);
     }
 
+    public int getTotalRing(){
+        int total = 0;
+        for(int i = 0; i<MAX_RINGS; i++){
+            if (rings[i] != null) {
+                total += rings[i].getRingPower();
+            }
+        }
+        return(total);
+    }
+
+    public void setRing(Ring ring, int slot) {
+        slot --;
+        if(0<=slot && slot<MAX_RINGS) {
+            this.rings[slot] = ring;
+        }
+    }
+
     public String armorToString(){
         String n = "ARMOR ";
         for(int i=0; i<MAX_ARMOR_PIECES; i++){
@@ -48,6 +70,18 @@ public class Hero extends Character {
             }
         }
         return (n +"TOTAL:"+getTotalArmor());
+    }
+
+    public String ringToString(){
+        String n = "RING ";
+        for(int i=0; i<MAX_RINGS; i++){
+            if (rings[i] == null) {
+                n += format(" %2d:%-30s",i+1,"empty");
+            } else {
+                n +=format(" %2d:%-30s",i+1, rings[i].toString());
+            }
+        }
+        return (n +"TOTAL:"+getTotalRing());
     }
 
     public ArmorItem[] getArmorItems(){
@@ -70,9 +104,34 @@ public class Hero extends Character {
         return (temp);
     }
 
+    public Ring[] getRings(){
+        int n = 0;
+        for (int i=0; i<MAX_RINGS; i++){
+            if(rings[i] != null){
+                n++;
+            }
+        }
+        Ring temp[] = new Ring[n];
+        if(n>0){
+            int m = 0;
+            for (int i=0; i<MAX_RINGS; i++){
+                if(rings[i] != null){
+                    temp[m] = rings[i];
+                    m++;
+                }
+            }
+        }
+        return (temp);
+    }
+
     @Override
     protected float computeProtection() {
         return (this.getTotalArmor());
+    }
+
+    @Override
+    protected float computeBuff() {
+        return (this.getTotalRing());
     }
 
     public static void main(String[] args) {
