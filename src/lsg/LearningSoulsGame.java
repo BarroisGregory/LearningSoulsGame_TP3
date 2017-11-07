@@ -2,6 +2,9 @@ package lsg;
 import lsg.armor.BlackWitchVeil;
 import lsg.armor.DragonSlayerLeggings;
 import lsg.armor.RingedKnightArmor;
+import lsg.buffs.rings.DragonSlayerRing;
+import lsg.buffs.rings.RingOfDeath;
+import lsg.buffs.talismans.MoonStone;
 import lsg.characters.*;
 import lsg.characters.Character;
 import lsg.weapons.Claw;
@@ -68,9 +71,9 @@ public class LearningSoulsGame {
     private void play_v3(){
         init();
         monster = new Lycanthrope();
-        hero.setArmorItem(new BlackWitchVeil(),1);
         hero.setArmorItem(new DragonSlayerLeggings(),2);
-        hero.setArmorItem(new RingedKnightArmor(),3);
+        hero.setRing(new RingOfDeath(),1);
+        hero.setRing(new DragonSlayerRing(),2);
         fight1v1();
     }
 

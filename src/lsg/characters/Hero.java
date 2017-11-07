@@ -43,7 +43,7 @@ public class Hero extends Character {
         return(total);
     }
 
-    public int getTotalRing(){
+    public int getTotalBuff(){
         int total = 0;
         for(int i = 0; i<MAX_RINGS; i++){
             if (rings[i] != null) {
@@ -57,6 +57,7 @@ public class Hero extends Character {
         slot --;
         if(0<=slot && slot<MAX_RINGS) {
             this.rings[slot] = ring;
+            ring.setHero(this);
         }
     }
 
@@ -81,7 +82,7 @@ public class Hero extends Character {
                 n +=format(" %2d:%-30s",i+1, rings[i].toString());
             }
         }
-        return (n +"TOTAL:"+getTotalRing());
+        return (n +"TOTAL:"+getTotalBuff());
     }
 
     public ArmorItem[] getArmorItems(){
@@ -131,7 +132,7 @@ public class Hero extends Character {
 
     @Override
     protected float computeBuff() {
-        return (this.getTotalRing());
+        return (this.getTotalBuff());
     }
 
     public static void main(String[] args) {
